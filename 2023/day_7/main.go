@@ -13,6 +13,23 @@ import (
 type cardType int
 
 const (
+	Jocker cardLabel = iota + 1
+	Two
+	Three
+	Four
+	Five
+	Six
+	Seven
+	Eight
+	Nine
+	Ten
+	Jack
+	Queen
+	King
+	Ace
+)
+
+const (
 	HighCard cardType = iota
 	OnePair
 	TwoPair
@@ -25,29 +42,13 @@ const (
 type cardLabel int
 
 type Card struct {
-	rank int
-	bid int
-	hand []cardLabel 
+	rank     int
+	bid      int
+	hand     []cardLabel
 	cardType cardType
 }
 
-
 func parse1(input string) []Card {
-	const (
-		Two cardLabel = iota + 2
-		Three
-		Four
-		Five
-		Six
-		Seven
-		Eight
-		Nine
-		Ten
-		Jack
-		Queen
-		King
-		Ace
-	)
 	lines := strings.Split(input, "\n")
 	cards := make([]Card, 0, len(lines))
 	for _, line := range lines {
@@ -115,8 +116,8 @@ func parse1(input string) []Card {
 		}
 
 		card := Card{
-			bid: bid,
-			hand: hand,
+			bid:      bid,
+			hand:     hand,
 			cardType: cardType,
 		}
 		cards = append(cards, card)
@@ -134,11 +135,11 @@ func getCardTypeStr(handMap map[cardLabel]int, card cardLabel) string {
 		for k, v := range handMap {
 			if k == card {
 				continue
-			} 
+			}
 			values = append(values, v)
 		}
 		slices.Sort(values)
-		values[len(values) - 1] += jockerCount
+		values[len(values)-1] += jockerCount
 		valuesStr := make([]string, 0, len(values))
 		for _, v := range values {
 			valuesStr = append(valuesStr, strconv.Itoa(v))
@@ -154,21 +155,6 @@ func getCardTypeStr(handMap map[cardLabel]int, card cardLabel) string {
 }
 
 func parse2(input string) []Card {
-	const (
-		Jocker cardLabel = iota + 1
-		Two
-		Three
-		Four
-		Five
-		Six
-		Seven
-		Eight
-		Nine
-		Ten
-		Queen
-		King
-		Ace
-	)
 	lines := strings.Split(input, "\n")
 	cards := make([]Card, 0, len(lines))
 	for _, line := range lines {
@@ -230,8 +216,8 @@ func parse2(input string) []Card {
 		}
 
 		card := Card{
-			bid: bid,
-			hand: hand,
+			bid:      bid,
+			hand:     hand,
 			cardType: cardType,
 		}
 		cards = append(cards, card)
@@ -262,6 +248,7 @@ func getRes(cards []Card) int {
 	}
 	return total
 }
+
 func part1(input string) int {
 	cards := parse1(input)
 	return getRes(cards)
